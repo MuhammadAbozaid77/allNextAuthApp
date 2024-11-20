@@ -1,9 +1,11 @@
 import { MongoClient } from "mongodb";
 
 export async function connectToDatabase() {
-  const client = await MongoClient.connect(
-    "mongodb+srv://muhammadabozaid77:muhammadabozaid77@cluster0.era66.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  );
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    throw new Error("MONGODB_URI is not defined in environment variables");
+  }
+  const client = await MongoClient.connect(uri);
 
   return client;
 }

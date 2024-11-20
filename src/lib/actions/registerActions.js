@@ -1,7 +1,5 @@
-// "use server";
-
 export async function createUser(email, password) {
-  const responce = await fetch("/api/auth", {
+  const responce = await fetch("/api/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

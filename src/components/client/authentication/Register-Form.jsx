@@ -2,7 +2,7 @@
 // import { useActionState, useRef } from "react";
 import { useRef } from "react";
 import SubmitForm from "./Submit-Form";
-import { createUser, getData, sendData } from "@/lib/actions/registerActions";
+import { createUser } from "@/lib/actions/registerActions";
 
 export default function RegisterForm() {
   const emailRef = useRef();
