@@ -9,7 +9,7 @@ export async function createUser(email, password) {
   const data = await responce.json();
 
   if (!responce.ok) {
-    throw new Error(data.message || "Something went Wrong");
+    throw new Error(data?.message || "Something went Wrong");
   }
   return data;
 }
