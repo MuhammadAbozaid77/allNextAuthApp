@@ -33,6 +33,19 @@ export async function POST(req) {
     // =========== Connect to database
     const client = await connectToDatabase();
     const db = client.db("authAppDatabase");
+
+    //----------Check Email In Databse-----------
+    const checkEmailInDatabse = await db.collection("users").findOne({
+      email: email,
+    });
+    if (checkEmailInDatabse) {
+      client.close();
+      return NextResponse.json(
+        { message: "Email Is Already Token" },
+        { status: 422 }
+      );
+    }
+    //-----------Add To Database-----------
     await db.collection("users").insertOne({
       email: email,
       password: password,

@@ -1,12 +1,13 @@
 "use client";
 // import { useActionState, useRef } from "react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import SubmitForm from "./Submit-Form";
 import { createUser } from "@/lib/actions/registerActions";
 
 export default function RegisterForm() {
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [errorInEmail, setErrorInEmail] = useState("");
 
   // Calling Server Action
   async function submitHandler(event) {
@@ -17,9 +18,14 @@ export default function RegisterForm() {
     try {
       const result = await createUser(enteredEmail, enteredPassword);
       console.log(result);
+
+      // if (result?.status === "200") {
+      //   console.log("GOOOOOOOOOOOOOOOOOOOOOOOOOOOD");
+      // }
+      setErrorInEmail("");
     } catch (error) {
-      // throw new Error("cant fetch Data");
-      console.log(error);
+      setErrorInEmail(error);
+      throw new Error(error || "Cant fetch Data");
     }
   }
   return (
@@ -29,6 +35,11 @@ export default function RegisterForm() {
         className="w-[500px] border p-5 rounded border-gray-500 bg-gray-50"
       >
         <h1 className="text-[20px] font-semibold mb-[20px]"> Register </h1>
+        {errorInEmail && (
+          <div className="bg-red-700 text-[14px] p-2 mb-2 rounded-md  text-white">
+            {errorInEmail?.message}
+          </div>
+        )}
         <div className="p-2 mb-5 border border-gray-500 flex flex-col rounded">
           <label htmlFor="email">Email</label>
           <input
